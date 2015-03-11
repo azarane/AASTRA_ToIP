@@ -1,0 +1,8 @@
+admin
+root
+Aastra
+Administrator
+NiceUser
+niceadmin
+eri_sn_admin
+aastra
