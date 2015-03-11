@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "Entrer l'adresse IP"; 
+echo "Enter the IP address"; 
 read adresse; 
-echo "Entrer le mot de passe"; 
+echo "Enter the password"; 
 read mdp; 
 nom=$(timeout 3s curl --data passw=$mdp -L http://$adresse/callLog.asp | grep printSelectedNumCLForm | cut -d \> -f 5 | cut -d \< -f 1 > nom.txt); 
 numero=$(timeout 3s curl --data passw=$mdp -L http://$adresse/callLog.asp | grep printSelectedNumCLForm | cut -d = -f 4 | cut -d \" -f 1 > numero.txt); 
