@@ -6,3 +6,4 @@ NiceUser
 niceadmin
 eri_sn_admin
 aastra
+postgres
